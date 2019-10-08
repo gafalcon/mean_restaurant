@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleService } from '../google.service';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+    searchForm: FormControl;
+    restaurants: Array<object>;
 
-  ngOnInit() {
-  }
+    constructor(
+        private googleApi: GoogleService,
+    ) {
+
+        this.searchForm = new FormControl('');
+    }
+
+
+    ngOnInit() {
+    }
+
+    onSubmit() {
+        this.googleApi.getRestaurants(this.searchForm.value).subscribe((res) => {
+            console.log(res);
+            this.restaurants = res.results;
+        });
+    }
 
 }

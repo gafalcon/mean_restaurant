@@ -1,14 +1,27 @@
+<div class="row"><h1>Search for Restaurants in Albany</h1></div>
 <div class="row">
     <div class="col"></div>
     <div class="col">
-        <h1>Search for Restaurant</h1>
         <form class="form-inline">
             <div class="form-group mx-sm-3 mb-2">
                 <label for="inputPassword2" class="sr-only">Search for a Restaurant</label>
-                <input type="text" class="form-control" id="search" placeholder="Enter a restaurant name">
+                <input type="text" class="form-control" id="search" placeholder="Enter a restaurant name" [formControl]="searchForm">
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
+            <button type="submit" class="btn btn-primary mb-2" (click)="onSubmit()">Search</button>
         </form>
     </div>
     <div class="col"></div>
 </div>
+<div class="row" *ngIf="restaurants?.length">
+    <div class="col">
+        <ul class="list-group" *ngFor="let rest of restaurants">
+            <li class="list-group-item" aria-disabled="true">
+                name: {{ rest.name }} <br />
+                price_level: {{ rest.price_level }}<br />
+                rating: {{ rest.rating }},<br />
+            </li>
+        </ul>
+    </div>
+</div>
+
+
