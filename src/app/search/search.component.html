@@ -21,7 +21,7 @@
             <div class="media-body">
                 <h4 class="mt-0 mb-1">{{ rest.name }}</h4>
                 price_level: {{ rest.price_level }}<br />
-                rating: {{ rest.rating }},<br />
+                <star-rating value="{{ rest.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating>
             </div>
         </li>
     </ul>

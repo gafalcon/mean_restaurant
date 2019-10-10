@@ -8,6 +8,8 @@ import { SearchComponent } from './search/search.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { RatingModule } from 'ng-starrating';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
       AppRoutingModule,
       HttpClientModule,
       ReactiveFormsModule,
-      FormsModule
+      FormsModule,
+      RatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
