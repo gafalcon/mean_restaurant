@@ -14,13 +14,17 @@
 </div>
 <div class="row" *ngIf="restaurants?.length">
     <div class="col">
-        <ul class="list-group" *ngFor="let rest of restaurants">
-            <li class="list-group-item" aria-disabled="true">
-                name: {{ rest.name }} <br />
+    <ul class="list-unstyled">
+        <li class="media" *ngFor="let rest of restaurants">
+            <img class="mr-3" src="{{ rest.photo_url }}">
+            <img src="..." class="mr-3" alt="...">
+            <div class="media-body">
+                <h4 class="mt-0 mb-1">{{ rest.name }}</h4>
                 price_level: {{ rest.price_level }}<br />
                 rating: {{ rest.rating }},<br />
-            </li>
-        </ul>
+            </div>
+        </li>
+    </ul>
     </div>
 </div>
 

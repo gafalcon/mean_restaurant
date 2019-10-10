@@ -26,7 +26,16 @@ export class SearchComponent implements OnInit {
     onSubmit() {
         this.googleApi.getRestaurants(this.searchForm.value).subscribe((res) => {
             console.log(res);
-            this.restaurants = res.results;
+            this.restaurants = res.results.map((restaurant) => {
+                return {
+                    place_id: restaurant.place_id,
+                    name: restaurant.name,
+                    rating: restaurant.rating,
+                    price_level: restaurant.price_level,
+                    photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference)
+                };
+            });
+            // this.restaurants = res.results;
         });
     }
 
