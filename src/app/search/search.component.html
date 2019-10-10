@@ -17,11 +17,10 @@
     <ul class="list-unstyled">
         <li class="media" *ngFor="let rest of restaurants">
             <img class="mr-3" src="{{ rest.photo_url }}">
-            <img src="..." class="mr-3" alt="...">
             <div class="media-body">
                 <h4 class="mt-0 mb-1">{{ rest.name }}</h4>
-                price_level: {{ rest.price_level }}<br />
-                <star-rating value="{{ rest.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating>
+                <span *ngIf="rest.price_level">price_level: {{ "$".repeat(rest.price_level) }}<br /></span>
+                <star-rating value="{{ rest.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating> {{ rest.num_ratings }} ratings
             </div>
         </li>
     </ul>

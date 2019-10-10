@@ -32,7 +32,10 @@ export class SearchComponent implements OnInit {
                     name: restaurant.name,
                     rating: restaurant.rating,
                     price_level: restaurant.price_level,
-                    photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference)
+                    photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
+                    types: restaurant.types,
+                    num_ratings: restaurant.user_ratings_total
+                    // vicinity is address?
                 };
             });
             // this.restaurants = res.results;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { GoogleService } from '../google.service';
 
 @Component({
   selector: 'app-restaurant',
@@ -7,9 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestaurantComponent implements OnInit {
 
-  constructor() { }
+    restaurants: Array<object>;
+    query: string;
+    constructor(
+        private route: ActivatedRoute,
+        private googleApi: GoogleService
+    ) { }
 
   ngOnInit() {
+      this.query = this.route.snapshot.paramMap.get('query');
+      console.log(this.query);
+      this.googleApi.getRestaurants(this.query).subscribe((res) => {
+          console.log(res);
+          this.restaurants = res.results.map((restaurant) => {
+              return {
+                  place_id: restaurant.place_id,
+                  name: restaurant.name,
+                  rating: restaurant.rating,
+                  price_level: restaurant.price_level,
+                  photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
+                  types: restaurant.types,
+                  num_ratings: restaurant.user_ratings_total
+                  // vicinity is address?
+              };
+          });
+          // this.restaurants = res.results;
+      });
   }
 
 }
