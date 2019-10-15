@@ -4,6 +4,7 @@
         <ul class="list-unstyled">
             <li class="media" *ngFor="let rest of restaurants">
                 <img class="mr-3" src="{{ rest.photo_url }}">
+                <!-- <img alt="" class="mr-3" src="/assets/rest_img.jpg"/> -->
                 <div class="media-body">
                     <h4 class="mt-0 mb-1">{{ rest.name }}</h4>
                     <span *ngIf="rest.price_level">price_level: {{ "$".repeat(rest.price_level) }}<br /></span>

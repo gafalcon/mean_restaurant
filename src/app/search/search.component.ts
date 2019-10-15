@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GoogleService } from '../google.service';
+// import { GoogleService } from '../google.service';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,8 @@ export class SearchComponent implements OnInit {
     }
 
     onSubmit() {
-        this.router.navigate(['/restaurant/' + this.searchForm.value]);
+        if (this.searchForm.value)
+            this.router.navigate(['/restaurant/' + this.searchForm.value]);
         // this.googleApi.getRestaurants(this.searchForm.value).subscribe((res) => {
         //     console.log(res);
         //     this.restaurants = res.results.map((restaurant) => {
