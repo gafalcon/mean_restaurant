@@ -19,7 +19,7 @@ export class RestaurantComponent implements OnInit {
   ngOnInit() {
       this.query = this.route.snapshot.paramMap.get('query');
       console.log(this.query);
-      this.googleApi.getRestaurants(this.query).subscribe((res) => {
+      this.googleApi.getRestaurants(this.query).subscribe((res: any) => {
           console.log(res);
           this.restaurants = res.results.map((restaurant) => {
               return {
@@ -29,7 +29,8 @@ export class RestaurantComponent implements OnInit {
                   price_level: restaurant.price_level,
                   photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
                   types: restaurant.types,
-                  num_ratings: restaurant.user_ratings_total
+                  num_ratings: restaurant.user_ratings_total,
+                  address: restaurant.vicinity
                   // vicinity is address?
               };
           });
