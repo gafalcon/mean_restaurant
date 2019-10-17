@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 // import { exampleJson } from './example';
 // import { of } from 'rxjs';
 
@@ -8,15 +9,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GoogleService {
 
-    API_KEY = 'AIzaSyDVeOWDBwAvMepBsbf0H57aRBrfcooBBUQ';
+    GOOGLE_API_KEY = environment.GOOGLE_API_KEY;
     API_URL = 'http://localhost:3000/api';
 
-    PHOTO_URL = 'https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyDVeOWDBwAvMepBsbf0H57aRBrfcooBBUQ&maxwidth=400&photoreference=';
+    PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
     constructor(private http: HttpClient) { }
 
     getRestaurants(query: string) {
         return this.http.get(`${this.API_URL}/restaurant/search?query=${query}`);
-        // console.log(query);
         // return of(exampleJson);
     }
 

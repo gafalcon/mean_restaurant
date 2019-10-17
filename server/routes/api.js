@@ -3,9 +3,10 @@ const router = express.Router();
 const axios = require('axios');
 // const json_rest_example = require('./place_details.json');
 
-const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDVeOWDBwAvMepBsbf0H57aRBrfcooBBUQ&location=42.652580,-73.756233&radius=5500&type=restaurant&keyword=';
+const API_KEY = process.env.GOOGLE_API_KEY;
+const GOOGLE_API_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=42.652580,-73.756233&radius=5500&type=restaurant&keyword=`;
 
-const PLACES_DETAIL_URL = 'https://maps.googleapis.com/maps/api/place/details/json?fields=name,rating,vicinity,formatted_address,photo,url,price_level,review,user_ratings_total&key=AIzaSyDVeOWDBwAvMepBsbf0H57aRBrfcooBBUQ&place_id=';
+const PLACES_DETAIL_URL = `https://maps.googleapis.com/maps/api/place/details/json?fields=name,rating,vicinity,formatted_address,photo,url,price_level,review,user_ratings_total&key=${API_KEY}&place_id=`;
 
 /* GET api listing */
 router.get('/', (req, res) => {
