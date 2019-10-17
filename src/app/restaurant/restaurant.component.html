@@ -1,18 +1,28 @@
-<h1>Search: {{ query }}</h1>
-<div class="row" *ngIf="restaurants?.length">
+<h1>Restaurant</h1>
+<div class="row" *ngIf="restaurant">
     <div class="col">
         <ul class="list-unstyled">
-            <li class="media" *ngFor="let rest of restaurants">
-                <img class="mr-3" src="{{ rest.photo_url }}">
-                <!-- <img alt="" class="mr-3" src="/assets/rest_img.jpg"/> -->
+            <li class="media">
+                <img class="mr-3" src="{{ restaurant.photo_url }}">
                 <div class="media-body">
-                    <h4 class="mt-0 mb-1">{{ rest.name }}</h4>
-                    <h5 class="mt-0 mb-1">{{ rest.address }}</h5>
-                    <span *ngIf="rest.price_level">price_level: {{ "$".repeat(rest.price_level) }}<br /></span>
-                    <star-rating value="{{ rest.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating> {{ rest.num_ratings }} ratings
+                    <h4 class="mt-0 mb-1">{{ restaurant.name }}</h4>
+                    <h5 class="mt-0 mb-1">{{ restaurant.address }}</h5>
+                    <span *ngIf="restaurant.price_level">price_level: {{ "$".repeat(restaurant.price_level) }}<br /></span>
+                    <star-rating value="{{ restaurant.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating> {{ restaurant.num_ratings }} ratings
                 </div>
             </li>
         </ul>
     </div>
 </div>
-
+<div class="" *ngIf="restaurant?.reviews.length">
+    <h2>Reviews</h2>
+    <div class="card" *ngFor="let review of restaurant.reviews">
+        <div class="card-header">
+            {{ review.author_name }} <span style="float:right">{{ review.relative_time_description }}</span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ review.text }}</p>
+            <star-rating value="{{ review.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { GoogleService } from '../google.service';
+import { GoogleService } from '../google.service';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
     restaurants: Array<object>;
 
     constructor(
-        // private googleApi: GoogleService,
+        private googleApi: GoogleService,
         private router: Router
     ) {
 
@@ -26,24 +26,25 @@ export class SearchComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.searchForm.value)
-            this.router.navigate(['/restaurant/' + this.searchForm.value]);
-        // this.googleApi.getRestaurants(this.searchForm.value).subscribe((res) => {
-        //     console.log(res);
-        //     this.restaurants = res.results.map((restaurant) => {
-        //         return {
-        //             place_id: restaurant.place_id,
-        //             name: restaurant.name,
-        //             rating: restaurant.rating,
-        //             price_level: restaurant.price_level,
-        //             photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
-        //             types: restaurant.types,
-        //             num_ratings: restaurant.user_ratings_total
-        //             // vicinity is address?
-        //         };
-        //     });
-        //     // this.restaurants = res.results;
-        // });
+        if (this.searchForm.value) {
+            // this.router.navigate(['/restaurant/' + this.searchForm.value]);
+            this.googleApi.getRestaurants(this.searchForm.value).subscribe((res: any) => {
+                console.log(res);
+                this.restaurants = res.results.map((restaurant) => {
+                    return {
+                        place_id: restaurant.place_id,
+                        name: restaurant.name,
+                        rating: restaurant.rating,
+                        price_level: restaurant.price_level,
+                        photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
+                        types: restaurant.types,
+                        num_ratings: restaurant.user_ratings_total,
+                        address: restaurant.vicinity
+                        // vicinity is address?
+                    };
+                });
+            });
+        }
     }
 
 }

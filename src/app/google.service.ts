@@ -15,12 +15,16 @@ export class GoogleService {
     constructor(private http: HttpClient) { }
 
     getRestaurants(query: string) {
-        return this.http.get(`${this.API_URL}/restaurant/search?query=` + query);
+        return this.http.get(`${this.API_URL}/restaurant/search?query=${query}`);
         // console.log(query);
         // return of(exampleJson);
     }
 
     getPhotoURL(photoReference: string) {
         return this.PHOTO_URL + photoReference;
+    }
+
+    getPlaceDetails(placeId: string) {
+        return this.http.get(`${this.API_URL}/restaurant/${placeId}`);
     }
 }

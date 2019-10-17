@@ -9,32 +9,29 @@ import { GoogleService } from '../google.service';
 })
 export class RestaurantComponent implements OnInit {
 
-    restaurants: Array<object>;
-    query: string;
+    restaurant: object;
+    placeId: string;
     constructor(
         private route: ActivatedRoute,
         private googleApi: GoogleService
     ) { }
 
   ngOnInit() {
-      this.query = this.route.snapshot.paramMap.get('query');
-      console.log(this.query);
-      this.googleApi.getRestaurants(this.query).subscribe((res: any) => {
+      this.placeId = this.route.snapshot.paramMap.get('id');
+      console.log(this.placeId);
+      this.googleApi.getPlaceDetails(this.placeId).subscribe((res: any) => {
           console.log(res);
-          this.restaurants = res.results.map((restaurant) => {
-              return {
-                  place_id: restaurant.place_id,
-                  name: restaurant.name,
-                  rating: restaurant.rating,
-                  price_level: restaurant.price_level,
-                  photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
-                  types: restaurant.types,
-                  num_ratings: restaurant.user_ratings_total,
-                  address: restaurant.vicinity
-                  // vicinity is address?
-              };
-          });
-          // this.restaurants = res.results;
+
+          this.restaurant = {
+              place_id: this.placeId,
+              name: res.name,
+              address: res.formatted_address,
+              rating: res.rating,
+              price_level: res.price_level,
+              photo_url: this.googleApi.getPhotoURL(res.photos[0].photo_reference),
+              num_ratings: res.user_ratings_total || 100,
+              reviews: res.reviews || []
+          };
       });
   }
 
