@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\"><h1>Search for Restaurants in Albany</h1></div>\n<div class=\"row\">\n    <div class=\"col\"></div>\n    <div class=\"col\">\n        <form class=\"form-inline\">\n            <div class=\"form-group mx-sm-3 mb-2\">\n                <label for=\"inputPassword2\" class=\"sr-only\">Search for a Restaurant</label>\n                <input type=\"text\" class=\"form-control\" id=\"search\" placeholder=\"Enter a restaurant name\" [formControl]=\"searchForm\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Search</button>\n        </form>\n    </div>\n    <div class=\"col\"></div>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/restaurant', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\"><h1>Search for Restaurants in {{ city }}</h1></div>\n<hr/>\n<div class=\"row\">\n    <form class=\"form-inline\">\n        <label class=\"mb-2 mr-2\" for=\"inlineFormCustomSelectPref\">City:</label>\n        <select class=\"custom-select mb-2 mr-sm-2\" id=\"inlineFormCustomSelectPref\" [formControl]=\"cityForm\">\n            <!-- <option selected>Choose...</option> -->\n            <option *ngFor=\"let c of cities\" value=\"{{ c }}\">{{ c }}</option>\n        </select>\n\n\n        <label class=\"mb-2 mr-2\" for=\"inlineFormInputGroupUsername2\">Place:</label>\n        <input type=\"text\" class=\"form-control mb-2 mr-sm-2\" id=\"inlineFormInputGroupUsername2\" placeholder=\"Enter a keyword to search\" [formControl]=\"searchForm\">\n\n        <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Submit</button>\n    </form>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/restaurant', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -455,8 +455,8 @@ let GoogleService = class GoogleService {
         this.API_URL = '/api';
         this.PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
     }
-    getRestaurants(query) {
-        return this.http.get(`${this.API_URL}/restaurant/search?query=${query}`);
+    getRestaurants(query, city) {
+        return this.http.get(`${this.API_URL}/restaurant/search?query=${query}&city=${city}`);
         // return of(exampleJson);
     }
     getPhotoURL(photoReference) {
@@ -576,24 +576,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _google_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../google.service */ "./src/app/google.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 
 
 
 
-
+// import { Router } from '@angular/router';
 let SearchComponent = class SearchComponent {
-    constructor(googleApi, router) {
+    constructor(googleApi) {
         this.googleApi = googleApi;
-        this.router = router;
+        this.cities = ['Albany', 'Saratoga', 'Schenectady', 'Troy', 'Manhattan', 'Brooklyn'];
         this.searchForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('');
+        this.cityForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](this.cities[0]);
     }
+    get city() { return this.cityForm.value; }
     ngOnInit() {
     }
     onSubmit() {
         if (this.searchForm.value) {
             // this.router.navigate(['/restaurant/' + this.searchForm.value]);
-            this.googleApi.getRestaurants(this.searchForm.value).subscribe((res) => {
+            this.googleApi.getRestaurants(this.searchForm.value, this.cityForm.value).subscribe((res) => {
                 console.log(res);
                 this.restaurants = res.results.map((restaurant) => {
                     return {
@@ -613,8 +614,7 @@ let SearchComponent = class SearchComponent {
     }
 };
 SearchComponent.ctorParameters = () => [
-    { type: _google_service__WEBPACK_IMPORTED_MODULE_2__["GoogleService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
+    { type: _google_service__WEBPACK_IMPORTED_MODULE_2__["GoogleService"] }
 ];
 SearchComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

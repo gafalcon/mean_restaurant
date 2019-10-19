@@ -91,7 +91,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"row\"><h1>Search for Restaurants in Albany</h1></div>\n<div class=\"row\">\n    <div class=\"col\"></div>\n    <div class=\"col\">\n        <form class=\"form-inline\">\n            <div class=\"form-group mx-sm-3 mb-2\">\n                <label for=\"inputPassword2\" class=\"sr-only\">Search for a Restaurant</label>\n                <input type=\"text\" class=\"form-control\" id=\"search\" placeholder=\"Enter a restaurant name\" [formControl]=\"searchForm\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Search</button>\n        </form>\n    </div>\n    <div class=\"col\"></div>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/restaurant', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"row\"><h1>Search for Restaurants in {{ city }}</h1></div>\n<hr/>\n<div class=\"row\">\n    <form class=\"form-inline\">\n        <label class=\"mb-2 mr-2\" for=\"inlineFormCustomSelectPref\">City:</label>\n        <select class=\"custom-select mb-2 mr-sm-2\" id=\"inlineFormCustomSelectPref\" [formControl]=\"cityForm\">\n            <!-- <option selected>Choose...</option> -->\n            <option *ngFor=\"let c of cities\" value=\"{{ c }}\">{{ c }}</option>\n        </select>\n\n\n        <label class=\"mb-2 mr-2\" for=\"inlineFormInputGroupUsername2\">Place:</label>\n        <input type=\"text\" class=\"form-control mb-2 mr-sm-2\" id=\"inlineFormInputGroupUsername2\" placeholder=\"Enter a keyword to search\" [formControl]=\"searchForm\">\n\n        <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Submit</button>\n    </form>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/restaurant', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n";
     /***/
   },
 
@@ -945,8 +945,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
       _createClass(GoogleService, [{
         key: "getRestaurants",
-        value: function getRestaurants(query) {
-          return this.http.get("".concat(this.API_URL, "/restaurant/search?query=").concat(query)); // return of(exampleJson);
+        value: function getRestaurants(query, city) {
+          return this.http.get("".concat(this.API_URL, "/restaurant/search?query=").concat(query, "&city=").concat(city)); // return of(exampleJson);
         }
       }, {
         key: "getPhotoURL",
@@ -1157,23 +1157,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/forms */
-    "./node_modules/@angular/forms/fesm2015/forms.js");
-    /* harmony import */
+    "./node_modules/@angular/forms/fesm2015/forms.js"); // import { Router } from '@angular/router';
 
-
-    var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-    /*! @angular/router */
-    "./node_modules/@angular/router/fesm2015/router.js");
 
     var SearchComponent =
     /*#__PURE__*/
     function () {
-      function SearchComponent(googleApi, router) {
+      function SearchComponent(googleApi) {
         _classCallCheck(this, SearchComponent);
 
         this.googleApi = googleApi;
-        this.router = router;
+        this.cities = ['Albany', 'Saratoga', 'Schenectady', 'Troy', 'Manhattan', 'Brooklyn'];
         this.searchForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('');
+        this.cityForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](this.cities[0]);
       }
 
       _createClass(SearchComponent, [{
@@ -1186,7 +1182,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           if (this.searchForm.value) {
             // this.router.navigate(['/restaurant/' + this.searchForm.value]);
-            this.googleApi.getRestaurants(this.searchForm.value).subscribe(function (res) {
+            this.googleApi.getRestaurants(this.searchForm.value, this.cityForm.value).subscribe(function (res) {
               console.log(res);
               _this2.restaurants = res.results.map(function (restaurant) {
                 return {
@@ -1204,6 +1200,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             });
           }
         }
+      }, {
+        key: "city",
+        get: function get() {
+          return this.cityForm.value;
+        }
       }]);
 
       return SearchComponent;
@@ -1212,8 +1213,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     SearchComponent.ctorParameters = function () {
       return [{
         type: _google_service__WEBPACK_IMPORTED_MODULE_2__["GoogleService"]
-      }, {
-        type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
       }];
     };
 
