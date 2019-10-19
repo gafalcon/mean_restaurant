@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class GoogleService {
 
     GOOGLE_API_KEY = environment.GOOGLE_API_KEY;
-    API_URL = 'http://localhost:3000/api';
+    API_URL = '/api';
 
     PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
     constructor(private http: HttpClient) { }

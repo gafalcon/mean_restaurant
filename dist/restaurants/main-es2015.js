@@ -452,7 +452,7 @@ let GoogleService = class GoogleService {
     constructor(http) {
         this.http = http;
         this.GOOGLE_API_KEY = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].GOOGLE_API_KEY;
-        this.API_URL = 'http://localhost:3000/api';
+        this.API_URL = '/api';
         this.PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
     }
     getRestaurants(query) {
