@@ -8,6 +8,17 @@ const GOOGLE_API_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/
 
 const PLACES_DETAIL_URL = `https://maps.googleapis.com/maps/api/place/details/json?fields=name,rating,vicinity,formatted_address,photo,url,price_level,review,user_ratings_total&key=${API_KEY}&place_id=`;
 
+getSearchURL = (location, radius, keyword) => `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${API_KEY}&location=${location}&radius=${radius}&type=restaurant&keyword=${keyword}`;
+
+const locations = {
+    Albany: '42.652580,-73.756233',
+    Saratoga: '43.0675747,-73.7784538',
+    Schenectady: '42.81424,-73.93957',
+    Troy: '42.7345227,-73.6751181',
+    Manhattan: '40.758896,-73.985130',
+    Brooklyn: '40.650002,-73.949997'
+}
+
 /* GET api listing */
 router.get('/', (req, res) => {
     res.send('api works');
@@ -15,7 +26,12 @@ router.get('/', (req, res) => {
 
 
 router.get('/restaurant/search', (req, res) =>{
-    axios.get(`${GOOGLE_API_URL}${req.query.query}`)
+
+    const location = locations[req.query.city];
+    const url = getSearchURL(location, 5500, req.query.query);
+    console.log(url)
+
+    axios.get(url)
         .then(response =>{
             res.status(200).json(response.data);
         })
