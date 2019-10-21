@@ -28,7 +28,7 @@ export class RestaurantComponent implements OnInit {
               address: res.formatted_address,
               rating: res.rating,
               price_level: res.price_level,
-              photo_url: this.googleApi.getPhotoURL(res.photos[0].photo_reference),
+              photo_url: res.photos ? this.googleApi.getPhotoURL(res.photos[0].photo_reference) : '',
               num_ratings: res.user_ratings_total || 100,
               reviews: res.reviews || []
           };

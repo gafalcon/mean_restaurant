@@ -1,12 +1,12 @@
-<div class="row"><h1>Search for Restaurants in {{ city }}</h1></div>
+<div class="row"><h1>Search: {{ search_value }}</h1></div>
 <hr/>
 <div class="row">
     <form class="form-inline">
-        <label class="mb-2 mr-2" for="inlineFormCustomSelectPref">City:</label>
-        <select class="custom-select mb-2 mr-sm-2" id="inlineFormCustomSelectPref" [formControl]="cityForm">
-            <!-- <option selected>Choose...</option> -->
-            <option *ngFor="let c of cities" value="{{ c }}">{{ c }}</option>
-        </select>
+        <!-- <label class="mb-2 mr-2" for="inlineFormCustomSelectPref">City:</label> -->
+        <!-- <select class="custom-select mb-2 mr-sm-2" id="inlineFormCustomSelectPref" [formControl]="cityForm"> -->
+        <!-- <option selected>Choose...</option> -->
+        <!-- <option *ngFor="let c of cities" value="{{ c }}">{{ c }}</option> -->
+        <!-- </select> -->
 
 
         <label class="mb-2 mr-2" for="inlineFormInputGroupUsername2">Place:</label>
@@ -23,7 +23,7 @@
                 <img class="mr-3" src="{{ rest.photo_url }}">
                 <!-- <img alt="" class="mr-3" src="/assets/rest_img.jpg"/> -->
                 <div class="media-body">
-                    <a [routerLink]="['/restaurant', rest.place_id]"><h4 class="mt-0 mb-1">{{ rest.name }}</h4></a>
+                    <a [routerLink]="['/place', rest.place_id]"><h4 class="mt-0 mb-1">{{ rest.name }}</h4></a>
                     <h5 class="mt-0 mb-1">{{ rest.address }}</h5>
                     <span *ngIf="rest.price_level">price_level: {{ "$".repeat(rest.price_level) }}<br /></span>
                     <star-rating value="{{ rest.rating }}" checkedcolor="gold" uncheckedcolor="gray" size="24px"    readonly="true"></star-rating> {{ rest.num_ratings }} ratings

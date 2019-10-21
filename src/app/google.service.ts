@@ -13,7 +13,11 @@ export class GoogleService {
     API_URL = '/api';
 
     PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
-    constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient) { }
+
+    getSearch(query: string) {
+        return this.http.get(`${this.API_URL}/search?query=${query}`);
+    }
 
     getRestaurants(query: string, city: string) {
         return this.http.get(`${this.API_URL}/restaurant/search?query=${query}&city=${city}`);

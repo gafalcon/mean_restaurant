@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" [routerLink]=\"['/']\">Restaurants</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" [routerLink]=\"['/']\">Search</a>\n      </li>\n    </ul>\n  </div>\n</nav>\n<div class=\"container\">\n<router-outlet></router-outlet>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" [routerLink]=\"['/']\">Places</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" [routerLink]=\"['/']\">Search</a>\n      </li>\n    </ul>\n  </div>\n</nav>\n<div class=\"container\">\n<router-outlet></router-outlet>\n</div>\n");
 
 /***/ }),
 
@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h1>Restaurant</h1>\n<div class=\"row\" *ngIf=\"restaurant\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\">\n                <img class=\"mr-3\" src=\"{{ restaurant.photo_url }}\">\n                <div class=\"media-body\">\n                    <h4 class=\"mt-0 mb-1\">{{ restaurant.name }}</h4>\n                    <h5 class=\"mt-0 mb-1\">{{ restaurant.address }}</h5>\n                    <span *ngIf=\"restaurant.price_level\">price_level: {{ \"$\".repeat(restaurant.price_level) }}<br /></span>\n                    <star-rating value=\"{{ restaurant.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ restaurant.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n<div class=\"\" *ngIf=\"restaurant?.reviews.length\">\n    <h2>Reviews</h2>\n    <div class=\"card\" *ngFor=\"let review of restaurant.reviews\">\n        <div class=\"card-header\">\n            {{ review.author_name }} <span style=\"float:right\">{{ review.relative_time_description }}</span>\n        </div>\n        <div class=\"card-body\">\n            <p class=\"card-text\">{{ review.text }}</p>\n            <star-rating value=\"{{ review.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h1>Place Details</h1>\n<div class=\"row\" *ngIf=\"restaurant\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\">\n                <img class=\"mr-3\" src=\"{{ restaurant.photo_url }}\">\n                <div class=\"media-body\">\n                    <h4 class=\"mt-0 mb-1\">{{ restaurant.name }}</h4>\n                    <h5 class=\"mt-0 mb-1\">{{ restaurant.address }}</h5>\n                    <span *ngIf=\"restaurant.price_level\">price_level: {{ \"$\".repeat(restaurant.price_level) }}<br /></span>\n                    <star-rating value=\"{{ restaurant.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ restaurant.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n<div class=\"\" *ngIf=\"restaurant?.reviews.length\">\n    <h2>Reviews</h2>\n    <div class=\"card\" *ngFor=\"let review of restaurant.reviews\">\n        <div class=\"card-header\">\n            {{ review.author_name }} <span style=\"float:right\">{{ review.relative_time_description }}</span>\n        </div>\n        <div class=\"card-body\">\n            <p class=\"card-text\">{{ review.text }}</p>\n            <star-rating value=\"{{ review.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating>\n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\"><h1>Search for Restaurants in {{ city }}</h1></div>\n<hr/>\n<div class=\"row\">\n    <form class=\"form-inline\">\n        <label class=\"mb-2 mr-2\" for=\"inlineFormCustomSelectPref\">City:</label>\n        <select class=\"custom-select mb-2 mr-sm-2\" id=\"inlineFormCustomSelectPref\" [formControl]=\"cityForm\">\n            <!-- <option selected>Choose...</option> -->\n            <option *ngFor=\"let c of cities\" value=\"{{ c }}\">{{ c }}</option>\n        </select>\n\n\n        <label class=\"mb-2 mr-2\" for=\"inlineFormInputGroupUsername2\">Place:</label>\n        <input type=\"text\" class=\"form-control mb-2 mr-sm-2\" id=\"inlineFormInputGroupUsername2\" placeholder=\"Enter a keyword to search\" [formControl]=\"searchForm\">\n\n        <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Submit</button>\n    </form>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/restaurant', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\"><h1>Search: {{ search_value }}</h1></div>\n<hr/>\n<div class=\"row\">\n    <form class=\"form-inline\">\n        <!-- <label class=\"mb-2 mr-2\" for=\"inlineFormCustomSelectPref\">City:</label> -->\n        <!-- <select class=\"custom-select mb-2 mr-sm-2\" id=\"inlineFormCustomSelectPref\" [formControl]=\"cityForm\"> -->\n        <!-- <option selected>Choose...</option> -->\n        <!-- <option *ngFor=\"let c of cities\" value=\"{{ c }}\">{{ c }}</option> -->\n        <!-- </select> -->\n\n\n        <label class=\"mb-2 mr-2\" for=\"inlineFormInputGroupUsername2\">Place:</label>\n        <input type=\"text\" class=\"form-control mb-2 mr-sm-2\" id=\"inlineFormInputGroupUsername2\" placeholder=\"Enter a keyword to search\" [formControl]=\"searchForm\">\n\n        <button type=\"submit\" class=\"btn btn-primary mb-2\" (click)=\"onSubmit()\">Submit</button>\n    </form>\n</div>\n\n<div class=\"row\" *ngIf=\"restaurants?.length\">\n    <div class=\"col\">\n        <ul class=\"list-unstyled\">\n            <li class=\"media\" *ngFor=\"let rest of restaurants\">\n                <img class=\"mr-3\" src=\"{{ rest.photo_url }}\">\n                <!-- <img alt=\"\" class=\"mr-3\" src=\"/assets/rest_img.jpg\"/> -->\n                <div class=\"media-body\">\n                    <a [routerLink]=\"['/place', rest.place_id]\"><h4 class=\"mt-0 mb-1\">{{ rest.name }}</h4></a>\n                    <h5 class=\"mt-0 mb-1\">{{ rest.address }}</h5>\n                    <span *ngIf=\"rest.price_level\">price_level: {{ \"$\".repeat(rest.price_level) }}<br /></span>\n                    <star-rating value=\"{{ rest.rating }}\" checkedcolor=\"gold\" uncheckedcolor=\"gray\" size=\"24px\"    readonly=\"true\"></star-rating> {{ rest.num_ratings }} ratings\n                </div>\n            </li>\n        </ul>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -313,7 +313,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const routes = [
     { path: '', component: _search_search_component__WEBPACK_IMPORTED_MODULE_3__["SearchComponent"] },
-    { path: 'restaurant/:id', component: _restaurant_restaurant_component__WEBPACK_IMPORTED_MODULE_4__["RestaurantComponent"] }
+    { path: 'place/:id', component: _restaurant_restaurant_component__WEBPACK_IMPORTED_MODULE_4__["RestaurantComponent"] }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -455,6 +455,9 @@ let GoogleService = class GoogleService {
         this.API_URL = '/api';
         this.PHOTO_URL = `https://maps.googleapis.com/maps/api/place/photo?key=${this.GOOGLE_API_KEY}&maxwidth=400&photoreference=`;
     }
+    getSearch(query) {
+        return this.http.get(`${this.API_URL}/search?query=${query}`);
+    }
     getRestaurants(query, city) {
         return this.http.get(`${this.API_URL}/restaurant/search?query=${query}&city=${city}`);
         // return of(exampleJson);
@@ -526,7 +529,7 @@ let RestaurantComponent = class RestaurantComponent {
                 address: res.formatted_address,
                 rating: res.rating,
                 price_level: res.price_level,
-                photo_url: this.googleApi.getPhotoURL(res.photos[0].photo_reference),
+                photo_url: res.photos ? this.googleApi.getPhotoURL(res.photos[0].photo_reference) : '',
                 num_ratings: res.user_ratings_total || 100,
                 reviews: res.reviews || []
             };
@@ -584,25 +587,27 @@ __webpack_require__.r(__webpack_exports__);
 let SearchComponent = class SearchComponent {
     constructor(googleApi) {
         this.googleApi = googleApi;
-        this.cities = ['Albany', 'Saratoga', 'Schenectady', 'Troy', 'Manhattan', 'Brooklyn'];
         this.searchForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('');
-        this.cityForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](this.cities[0]);
+        // this.cityForm = new FormControl(this.cities[0]);
     }
-    get city() { return this.cityForm.value; }
+    // get city() { return this.cityForm.value; }
+    get search_value() { return this.searchForm.value; }
     ngOnInit() {
     }
     onSubmit() {
         if (this.searchForm.value) {
             // this.router.navigate(['/restaurant/' + this.searchForm.value]);
-            this.googleApi.getRestaurants(this.searchForm.value, this.cityForm.value).subscribe((res) => {
+            this.googleApi.getSearch(this.searchForm.value).subscribe((res) => {
+                // this.googleApi.getRestaurants(this.searchForm.value, this.cityForm.value).subscribe((res: any) => {
                 console.log(res);
                 this.restaurants = res.results.map((restaurant) => {
+                    console.log(restaurant);
                     return {
                         place_id: restaurant.place_id,
                         name: restaurant.name,
                         rating: restaurant.rating,
                         price_level: restaurant.price_level,
-                        photo_url: this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference),
+                        photo_url: restaurant.photos ? this.googleApi.getPhotoURL(restaurant.photos[0].photo_reference) : '',
                         types: restaurant.types,
                         num_ratings: restaurant.user_ratings_total,
                         address: restaurant.vicinity

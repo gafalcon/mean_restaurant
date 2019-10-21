@@ -23,7 +23,20 @@ const locations = {
 router.get('/', (req, res) => {
     res.send('api works');
 })
+const SEARCH_URL = `https://maps.googleapis.com/maps/api/place/textsearch/json?key=${API_KEY}&query=`;
 
+router.get('/search', (req, res) => {
+    axios.get(SEARCH_URL + req.query.query)
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(error => {
+            console.log("ERROR!!");
+            res.status(500).send(error);
+        });
+
+    }
+);
 
 router.get('/restaurant/search', (req, res) =>{
 
